@@ -1,0 +1,67 @@
+# =====================
+# OS / Editor
+# =====================
+.DS_Store
+Thumbs.db
+
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# =====================
+# Maven
+# =====================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# =====================
+# Gradle (nếu sau này dùng)
+# =====================
+.gradle/
+build/
+
+# =====================
+# Kotlin
+# =====================
+.kotlin/
+*.class
+*.kotlin_metadata
+*.kotlin_module
+
+# =====================
+# Logs
+# =====================
+*.log
+
+# =====================
+# Server runtime (KHÔNG commit)
+# =====================
+run/
+server/
+paper/
+spigot/
+logs/
+plugins/*
+!plugins/ElyInv.jar
+
+# =====================
+# Local config / test data
+# =====================
+*.db
+*.sqlite
+*.yml.bak
+*.tmp
+
+# =====================
+# Environment
+# =====================
+.env

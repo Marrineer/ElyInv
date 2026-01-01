@@ -1,0 +1,6 @@
+name: ElyInv
+version: '0.1.0'
+main: com.marrineer.elyInv.ElyInv
+api-version: '1.21'
+authors: [ Marrineer ]
+website: https://guns.lol/marrineer
