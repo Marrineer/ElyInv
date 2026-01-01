@@ -2,7 +2,9 @@ package com.marrineer.elyInv.commands
 
 import com.marrineer.elyInv.ElyInv
 import com.marrineer.elyInv.commands.interfaces.SubCommand
+import com.marrineer.elyInv.commands.subcommands.BuyCommand
 import com.marrineer.elyInv.commands.subcommands.ReloadCommand
+import com.marrineer.elyInv.commands.subcommands.SetCommand
 import com.marrineer.elyInv.commands.subcommands.ToggleCommand
 import com.marrineer.elyInv.managers.ConfigManager
 import com.marrineer.elyInv.utils.MessageUtils
@@ -21,6 +23,13 @@ class ElyBase(
     init {
         register(ReloadCommand(plugin))
         register(ToggleCommand(plugin))
+        register(BuyCommand(
+            plugin,
+            plugin
+                .configManager
+                .getMaxUsage())
+        )
+        register(SetCommand(plugin))
     }
 
     override fun onCommand(

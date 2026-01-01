@@ -2,3 +2,6 @@ global-prefix: "<b><gradient:#967289:#6B8AE0>[ ᴇʟ</gradient><gradient:#6B8AE0
 
 storage:
   path: "storage.yml"
+
+usage:
+  max-per-player: 50

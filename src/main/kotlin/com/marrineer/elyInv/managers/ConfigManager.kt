@@ -33,6 +33,8 @@ class ConfigManager(
     fun playerStoragePath(): String =
         config.getString("storage.path", "player.yml") ?: "player.yml"
 
+    fun getMaxUsage(): Int = config.getInt("usage.max-per-player", 50)
+
     enum class FileType {
         CONFIG, MESSAGE
     }

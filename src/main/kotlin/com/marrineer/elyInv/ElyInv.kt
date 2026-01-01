@@ -1,12 +1,15 @@
 package com.marrineer.elyInv
 
 import com.marrineer.elyInv.commands.ElyBase
+import com.marrineer.elyInv.listeners.PlayerDeathListener
 import com.marrineer.elyInv.managers.ConfigManager
 import com.marrineer.elyInv.managers.MessageManager
 import com.marrineer.elyInv.managers.PlayerManager
 import com.marrineer.elyInv.utils.MessageUtils
+import com.marrineer.elyInv.utils.SimpleLogger
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.milkbowl.vault.economy.Economy
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.plugin.java.JavaPlugin
 
 class ElyInv : JavaPlugin() {
@@ -18,6 +21,7 @@ class ElyInv : JavaPlugin() {
     lateinit var configManager: ConfigManager
     lateinit var messageManager: MessageManager
     lateinit var playerManager: PlayerManager
+    lateinit var simpleLogger: SimpleLogger
 
     override fun onEnable() {
         if (!setupEconomy()) {
@@ -39,7 +43,10 @@ class ElyInv : JavaPlugin() {
         }
         playerManager =
             PlayerManager(configManager.playerStoragePath(), this).init()
+        this.simpleLogger = SimpleLogger(this, adventure)
 
+
+        // ============ COMMAND ============ //
         val command = server.getPluginCommand("elyinv")
         if (command == null) {
             logger.severe("Command 'elyinv' not found in plugin.yml")
@@ -47,6 +54,9 @@ class ElyInv : JavaPlugin() {
             return
         }
         command.setExecutor(ElyBase(messageUtils, this))
+
+        // ============ EVENT ============ //
+        server.pluginManager.registerEvents(PlayerDeathListener(this), this)
     }
 
     override fun onDisable() {

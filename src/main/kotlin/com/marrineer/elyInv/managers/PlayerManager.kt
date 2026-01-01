@@ -2,6 +2,7 @@ package com.marrineer.elyInv.managers
 
 import com.marrineer.elyInv.ElyInv
 import com.marrineer.elyInv.model.PlayerProfile
+import com.marrineer.elyInv.utils.SimpleLogger
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
@@ -20,13 +21,14 @@ class PlayerManager(
     fun init(): PlayerManager {
         this.file = File(plugin.dataFolder, filePath)
         if (!file.exists()) {
-            plugin.saveResource("messages.yml", false)
+            plugin.saveResource(filePath, false)
         }
         reload()
         return this@PlayerManager
     }
 
     fun reload() {
+        val startTime = System.currentTimeMillis()
         playerFile = YamlConfiguration.loadConfiguration(file)
         clearAllProfiles()
 
@@ -39,6 +41,12 @@ class PlayerManager(
 
             playerProfile[uuid] = PlayerProfile(counts, toggle)
         }
+
+        val duration = System.currentTimeMillis() - startTime
+        plugin.simpleLogger.log(
+            SimpleLogger.LogLevel.INFO,
+            "Loaded ${playerProfile.size} profiles in ${duration}ms"
+        )
     }
 
     fun reloadAll() {
@@ -58,7 +66,10 @@ class PlayerManager(
         try {
             playerFile.save(file)
         } catch (ex: Exception) {
-            plugin.logger.severe("Failed to save player data: ${ex.message}")
+            plugin.simpleLogger.log(
+                SimpleLogger.LogLevel.ERROR,
+                "Failed to save player data: ${ex.message}"
+            )
         }
     }
 
@@ -68,7 +79,7 @@ class PlayerManager(
     }
 
 
-    private fun getOrCreateProfile(player: UUID): PlayerProfile {
+    fun getOrCreateProfile(player: UUID): PlayerProfile {
         return playerProfile.getOrPut(player) { PlayerProfile(0) }
     }
 

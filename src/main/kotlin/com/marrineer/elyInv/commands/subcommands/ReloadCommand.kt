@@ -3,6 +3,7 @@ package com.marrineer.elyInv.commands.subcommands
 import com.marrineer.elyInv.ElyInv
 import com.marrineer.elyInv.commands.interfaces.SubCommand
 import com.marrineer.elyInv.managers.ConfigManager
+import com.marrineer.elyInv.utils.SimpleLogger
 import org.bukkit.command.CommandSender
 
 class ReloadCommand(
@@ -16,7 +17,10 @@ class ReloadCommand(
         plugin.configManager.reloadConfig()
         plugin.messageManager.reload()
         plugin.playerManager.reloadAll()
-        plugin.logger.severe(String.format("[%s] Config reloaded", plugin.name))
+        plugin.simpleLogger.log(
+            SimpleLogger.LogLevel.INFO,
+            "Config reloaded"
+        )
         plugin.messageUtils.sendWithPrefixToSender(
             sender,
             plugin.messageUtils.get(
