@@ -30,15 +30,15 @@ class ElyInv : JavaPlugin() {
         hasPAPI = (server.pluginManager.getPlugin("PlaceholderAPI") != null)
 
         this.adventure = BukkitAudiences.create(this)
+        this.configManager = ConfigManager(this).apply {
+            reload()
+        }
         this.messageUtils = MessageUtils(
             this,
             hasPAPI,
             adventure,
             configManager.getPrefix()
         )
-        this.configManager = ConfigManager(this).apply {
-            reload()
-        }
         this.messageManager = MessageManager.apply {
             init(this@ElyInv)
         }
