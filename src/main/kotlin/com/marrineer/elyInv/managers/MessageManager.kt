@@ -21,6 +21,7 @@ object MessageManager {
             plugin.saveResource("messages.yml", false)
         }
         reload()
+        return this@MessageManager
     }
 
     fun reload() {
