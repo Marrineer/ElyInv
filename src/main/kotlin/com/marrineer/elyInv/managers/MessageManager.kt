@@ -13,7 +13,8 @@ object MessageManager {
     lateinit var file: File
     lateinit var plugin: ElyInv
     lateinit var defaultMessage: FileConfiguration
-    fun init(plugin: ElyInv) {
+
+    fun init(plugin: ElyInv): MessageManager {
         this.plugin = plugin
         file = File(plugin.dataFolder, "messages.yml")
         if (!file.exists()) {

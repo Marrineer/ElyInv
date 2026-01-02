@@ -13,51 +13,54 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class ElyInv : JavaPlugin() {
     lateinit var econ: Economy
-    var hasPAPI: Boolean = false
 
-    lateinit var adventure: BukkitAudiences
-    lateinit var messageUtils: MessageUtils
     lateinit var configManager: ConfigManager
+    lateinit var messageUtils: MessageUtils
     lateinit var messageManager: MessageManager
     lateinit var playerManager: PlayerManager
     lateinit var simpleLogger: SimpleLogger
+    lateinit var adventure: BukkitAudiences
 
     override fun onEnable() {
-        if (!setupEconomy()) {
-            logger.severe(String.format("[%s] - Disabled due to no Vault dependency found!", this.name));
-            server.pluginManager.disablePlugin(this)
-        }
-        hasPAPI = (server.pluginManager.getPlugin("PlaceholderAPI") != null)
-
         this.adventure = BukkitAudiences.create(this)
+
+        if (!setupEconomy()) {
+            logger.severe(String.format("[%s] - Disabled due to no Vault dependency found!", this.name))
+            server.pluginManager.disablePlugin(this)
+            return
+        }
+
+        val hasPAPI = (server.pluginManager.getPlugin("PlaceholderAPI") != null)
+
         this.configManager = ConfigManager(this).apply {
             reload()
         }
+
+        this.simpleLogger = SimpleLogger(this, adventure)
+
         this.messageUtils = MessageUtils(
             this,
             hasPAPI,
             adventure,
             configManager.getPrefix()
         )
-        this.messageManager = MessageManager.apply {
-            init(this@ElyInv)
-        }
-        playerManager =
-            PlayerManager(configManager.playerStoragePath(), this).init()
-        this.simpleLogger = SimpleLogger(this, adventure)
 
+        this.messageManager = MessageManager.init(this)
 
-        // ============ COMMAND ============ //
+        this.playerManager = PlayerManager(configManager.playerStoragePath(), this).init()
+
         val command = server.getPluginCommand("elyinv")
         if (command == null) {
             logger.severe("Command 'elyinv' not found in plugin.yml")
             server.pluginManager.disablePlugin(this)
             return
         }
+
         command.setExecutor(ElyBase(messageUtils, this))
 
-        // ============ EVENT ============ //
         server.pluginManager.registerEvents(PlayerDeathListener(this), this)
+
+        simpleLogger.log(SimpleLogger.LogLevel.INFO, "Plugin enabled")
     }
 
     override fun onDisable() {
