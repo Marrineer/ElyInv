@@ -3,7 +3,21 @@ commands:
   invalid-command: "Lệnh không tồn tại, sử dụng /help để xem danh sách lệnh có sẵn"
   no-permission: "Bạn không có quyền sử dụng lệnh này!"
   player-only: "Chỉ người chơi mới có quyền sử dụng lệnh này"
-  config-reloaded: "Config reloaded"
+  config-reloaded: "Đã reload config thành công"
+
+  elyinv:
+    set:
+      usage: "Sử dụng: /elyinv set <player> <amount>"
+      invalid-amount: "Số lượng không hợp lệ"
+      amount-must-positive: "Số lượng phải lớn hơn 0"
+      success: "Đã đặt usage của {player} thành &e{amount}"
+
+    buy:
+      invalid-amount: "Tham số không hợp lệ"
+      amount-must-positive: "Số lượng phải lớn hơn 0"
+      max-usage: "Bạn đã đạt giới hạn usage ({max})"
+      not-enough-money: "Bạn không đủ tiền (Cần {price})"
+      success-with-price: "Mua thành công {amount} usage (-{price})"
 
   toggle-keep:
     enabled: "Đã bật tính năng keepInventory"

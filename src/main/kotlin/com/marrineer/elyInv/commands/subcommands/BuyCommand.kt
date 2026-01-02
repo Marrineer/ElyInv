@@ -21,7 +21,10 @@ class BuyCommand(
         val currentUsage = plugin.playerManager.getCount(uuid)
 
         if (currentUsage >= maxusage) {
-            // todo: message max usage
+            plugin.messageUtils.sendWithPrefixToSender(
+                sender,
+                plugin.messageUtils.get("commands.elyinv.buy.max-usage")
+            )
             return
         }
 
@@ -31,16 +34,21 @@ class BuyCommand(
             val raw = args[0]
 
             if (!raw.all { it.isDigit() }) {
-                // todo: tham số không hợp lệ
+                plugin.messageUtils.sendWithPrefixToSender(
+                    sender,
+                    plugin.messageUtils.get("commands.elyinv.buy.invalid-amount")
+                )
                 return
             }
 
             val value = raw.toInt()
             if (value <= 0) {
-                // todo: tham số không hợp lệ
+                plugin.messageUtils.sendWithPrefixToSender(
+                    sender,
+                    plugin.messageUtils.get("commands.elyinv.buy.amount-must-positive")
+                )
                 return
             }
-
             value
         }
 
@@ -50,13 +58,19 @@ class BuyCommand(
         val balance = plugin.econ.getBalance(player)
         val totalPrice = actualBuy * price
         if (balance < totalPrice) {
-            //todo: deo du tien
+            plugin.messageUtils.sendWithPrefixToSender(
+                sender,
+                plugin.messageUtils.get("commands.elyinv.buy.not-enough-money")
+            )
             return
         }
         plugin.econ.withdrawPlayer(player, totalPrice)
         plugin.playerManager.addCount(uuid, actualBuy)
 
-        // todo: message thành công (actualBuy)
+        plugin.messageUtils.sendWithPrefixToSender(
+            sender,
+            plugin.messageUtils.get("commands.elyinv.buy.success-with-price")
+        )
     }
 
     override fun tabComplete(

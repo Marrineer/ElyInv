@@ -14,7 +14,10 @@ class SetCommand(
 
     override fun execute(sender: CommandSender, args: List<String>) {
         if (args.size < 2) {
-            // todo: usage /elyinv set <player> <amount>
+            plugin.messageUtils.sendWithPrefixToSender(
+                sender,
+                plugin.messageUtils.get("commands.elyinv.set.usage")
+            )
             return
         }
 
@@ -22,19 +25,28 @@ class SetCommand(
         val rawAmount = args[1]
 
         if (!rawAmount.all { it.isDigit() }) {
-            // todo: amount không hợp lệ
+            plugin.messageUtils.sendWithPrefixToSender(
+                sender,
+                plugin.messageUtils.get("commands.elyinv.set.invalid-amount")
+            )
             return
         }
 
         val amount = rawAmount.toInt()
         if (amount <= 0) {
-            // todo: amount phải > 0
+            plugin.messageUtils.sendWithPrefixToSender(
+                sender,
+                plugin.messageUtils.get("commands.elyinv.set.amount-must-positive")
+            )
             return
         }
         val targetUuid = Bukkit.getOfflinePlayer(targetName).uniqueId
 
         plugin.playerManager.setCount(targetUuid, amount)
-        //todo: set thanh cong
+        plugin.messageUtils.sendWithPrefixToSender(
+            sender,
+            plugin.messageUtils.get("commands.elyinv.set.success")
+        )
     }
 
     override fun tabComplete(

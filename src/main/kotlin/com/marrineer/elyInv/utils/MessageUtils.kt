@@ -39,7 +39,7 @@ class MessageUtils(
     fun sendWithPrefixToPlayer(player: Player, text: String) {
         sendToPlayer(
             player,
-            String.format("%s <reset>%s", prefix, text)
+            String.format("%s <reset>%s", prefix, parse(player, text))
         )
     }
 
@@ -52,7 +52,7 @@ class MessageUtils(
 
     fun sendToPlayer(player: Player, text: String) {
         audience(player).sendMessage {
-            miniMessage.deserialize(text)
+            miniMessage.deserialize(parse(player, text))
         }
     }
 

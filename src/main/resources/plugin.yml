@@ -4,6 +4,10 @@ main: com.marrineer.elyInv.ElyInv
 api-version: "1.21"
 authors: [Marrineer]
 website: https://guns.lol/marrineer
+depend:
+  - Vault
+softdepend:
+  - PlaceholderAPI
 commands:
   elyinv:
     description: Main command for ElyInv plugin
