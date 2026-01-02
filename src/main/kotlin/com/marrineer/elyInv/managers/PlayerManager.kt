@@ -21,7 +21,16 @@ class PlayerManager(
     fun init(): PlayerManager {
         this.file = File(plugin.dataFolder, filePath)
         if (!file.exists()) {
-            plugin.saveResource(filePath, false)
+            file.parentFile?.mkdirs()
+            val resourceStream = plugin.getResource(filePath)
+            if (resourceStream != null) {
+                plugin.saveResource(filePath, false)
+            } else {
+                file.createNewFile()
+                if (filePath.endsWith(".yml")) {
+                    file.writeText("# Configuration file for ElyInv\n")
+                }
+            }
         }
         reload()
         return this@PlayerManager
