@@ -21,7 +21,7 @@ class SetCommand(
         val targetName = args[0]
         val rawAmount = args[1]
 
-        if(!rawAmount.all { it.isDigit() }) {
+        if (!rawAmount.all { it.isDigit() }) {
             // todo: amount không hợp lệ
             return
         }

@@ -2,7 +2,6 @@ package com.marrineer.elyInv.utils
 
 import com.marrineer.elyInv.ElyInv
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 
 class SimpleLogger(

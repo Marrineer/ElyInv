@@ -6,7 +6,6 @@ import com.marrineer.elyInv.commands.subcommands.BuyCommand
 import com.marrineer.elyInv.commands.subcommands.ReloadCommand
 import com.marrineer.elyInv.commands.subcommands.SetCommand
 import com.marrineer.elyInv.commands.subcommands.ToggleCommand
-import com.marrineer.elyInv.managers.ConfigManager
 import com.marrineer.elyInv.utils.MessageUtils
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -23,12 +22,7 @@ class ElyBase(
     init {
         register(ReloadCommand(plugin))
         register(ToggleCommand(plugin))
-        register(BuyCommand(
-            plugin,
-            plugin
-                .configManager
-                .getMaxUsage())
-        )
+        register(BuyCommand(plugin))
         register(SetCommand(plugin))
     }
 
@@ -42,7 +36,6 @@ class ElyBase(
             messageUtils.sendWithPrefixToSender(
                 sender,
                 messageUtils.get(
-                    ConfigManager.FileType.MESSAGE,
                     "commands.no-subcommand"
                 )
             )
@@ -53,7 +46,6 @@ class ElyBase(
                 messageUtils.sendWithPrefixToSender(
                     sender,
                     messageUtils.get(
-                        ConfigManager.FileType.MESSAGE,
                         "commands.invalid-command"
                     )
                 )
@@ -63,7 +55,6 @@ class ElyBase(
             messageUtils.sendWithPrefixToSender(
                 sender,
                 messageUtils.get(
-                    ConfigManager.FileType.MESSAGE,
                     "commands.no-permission"
                 )
             )
@@ -73,7 +64,6 @@ class ElyBase(
             messageUtils.sendWithPrefixToSender(
                 sender,
                 messageUtils.get(
-                    ConfigManager.FileType.MESSAGE,
                     "commands.player-only"
                 )
             )

@@ -2,7 +2,6 @@ package com.marrineer.elyInv.commands.subcommands
 
 import com.marrineer.elyInv.ElyInv
 import com.marrineer.elyInv.commands.interfaces.SubCommand
-import com.marrineer.elyInv.managers.ConfigManager
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
@@ -29,10 +28,7 @@ class ToggleCommand(
 
         plugin.messageUtils.sendWithPrefixToSender(
             sender,
-            plugin.messageUtils.get(
-                ConfigManager.FileType.MESSAGE,
-                "commands.toggle-keep.$status"
-            )
+            plugin.messageUtils.get("commands.toggle-keep.$status")
         )
     }
 

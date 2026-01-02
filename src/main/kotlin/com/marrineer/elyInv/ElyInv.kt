@@ -9,7 +9,6 @@ import com.marrineer.elyInv.utils.MessageUtils
 import com.marrineer.elyInv.utils.SimpleLogger
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.milkbowl.vault.economy.Economy
-import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.plugin.java.JavaPlugin
 
 class ElyInv : JavaPlugin() {

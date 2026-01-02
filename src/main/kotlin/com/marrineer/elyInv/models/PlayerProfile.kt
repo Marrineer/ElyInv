@@ -1,4 +1,4 @@
-package com.marrineer.elyInv.model
+package com.marrineer.elyInv.models
 
 data class PlayerProfile(
     val count: Int,

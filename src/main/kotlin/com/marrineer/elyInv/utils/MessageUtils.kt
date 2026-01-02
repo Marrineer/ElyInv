@@ -1,7 +1,6 @@
 package com.marrineer.elyInv.utils
 
 import com.marrineer.elyInv.ElyInv
-import com.marrineer.elyInv.managers.ConfigManager
 import me.clip.placeholderapi.PlaceholderAPI
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
@@ -27,20 +26,10 @@ class MessageUtils(
     }
 
     //===================== GET FROM FILE =====================//
-    fun get(type: ConfigManager.FileType, placeholder: String) {
-        when (type) {
-            ConfigManager.FileType.CONFIG -> {
-                plugin.configManager.get(placeholder)
-            }
-
-            ConfigManager.FileType.MESSAGE -> {
-                plugin.messageManager.get(placeholder)
-            }
-        }
-    }
+    fun get(placeholder: String) = plugin.messageManager.get(placeholder)
 
     //===================== SEND WITH PREFIX =====================//
-    fun sendWithPrefixToSender(sender: CommandSender, text: Unit) {
+    fun sendWithPrefixToSender(sender: CommandSender, text: String) {
         sendToSender(
             sender,
             String.format("%s <reset>%s", prefix, text)

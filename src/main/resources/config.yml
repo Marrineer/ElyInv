@@ -4,4 +4,5 @@ storage:
   path: "storage.yml"
 
 usage:
+  price: 300.0
   max-per-player: 50

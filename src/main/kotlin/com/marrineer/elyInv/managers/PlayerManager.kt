@@ -1,7 +1,7 @@
 package com.marrineer.elyInv.managers
 
 import com.marrineer.elyInv.ElyInv
-import com.marrineer.elyInv.model.PlayerProfile
+import com.marrineer.elyInv.models.PlayerProfile
 import com.marrineer.elyInv.utils.SimpleLogger
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration

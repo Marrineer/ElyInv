@@ -1,41 +1,56 @@
 package com.marrineer.elyInv.managers
 
 import com.marrineer.elyInv.ElyInv
-import org.bukkit.configuration.file.FileConfiguration
+import com.marrineer.elyInv.models.ConfigData
+import com.marrineer.elyInv.models.Default
+import com.marrineer.elyInv.models.data.UsageData
 
 @Suppress("unused")
 class ConfigManager(
     private val plugin: ElyInv
 ) {
 
-    private val config: FileConfiguration
-        get() = plugin.config
+    @Volatile
+    lateinit var config: ConfigData
+        private set
 
     init {
-        loadConfig()
+        reload()
     }
 
-    fun loadConfig() {
-        plugin.saveDefaultConfig()
-        plugin.reloadConfig()
+    private fun load(): ConfigData {
+        val cfg = plugin.config
+        return ConfigData(
+            prefix = cfg.getString(
+                "global-prefix"
+            )
+                ?: Default.PREFIX,
+            storage = cfg.getString(
+                "storage.path"
+            )
+                ?: Default.STORAGE_PATH,
+            usageData = UsageData(
+                price = cfg.getDouble(
+                    "usage.price",
+                    Default.PRICE
+                ),
+                perPlayer = cfg.getInt(
+                    "usage.max-per-player",
+                    Default.MAX_PER_PLAYER
+                )
+            )
+        )
     }
 
-    fun reloadConfig() {
-        plugin.reloadConfig()
+    fun reload() {
+        config = load()
     }
 
-    fun get(path: String): Any? =
-        config.get(path, "Missing config: $path")
+    fun getPrefix(): String = config.prefix
 
-    fun getPrefix(): String =
-        config.getString("global-prefix", "") ?: ""
+    fun playerStoragePath(): String = config.storage
 
-    fun playerStoragePath(): String =
-        config.getString("storage.path", "player.yml") ?: "player.yml"
+    fun getMaxUsage(): Int = config.usageData.perPlayer
 
-    fun getMaxUsage(): Int = config.getInt("usage.max-per-player", 50)
-
-    enum class FileType {
-        CONFIG, MESSAGE
-    }
+    fun getPrice(): Double = config.usageData.price
 }
