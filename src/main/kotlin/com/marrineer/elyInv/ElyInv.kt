@@ -36,7 +36,9 @@ class ElyInv : JavaPlugin() {
             adventure,
             configManager.getPrefix()
         )
-        this.configManager = ConfigManager(this)
+        this.configManager = ConfigManager(this).apply {
+            reload()
+        }
         this.messageManager = MessageManager.apply {
             init(this@ElyInv)
         }
