@@ -10,6 +10,7 @@ import com.marrineer.elyInv.utils.MessageUtils
 import com.marrineer.elyInv.utils.SimpleLogger
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.milkbowl.vault.economy.Economy
+import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 
 class ElyInv : JavaPlugin() {
@@ -67,30 +68,29 @@ class ElyInv : JavaPlugin() {
 
         simpleLogger.log(SimpleLogger.LogLevel.INFO, "Plugin enabled")
 
-        val infoLines = listOf(
-            "&fVersion: &7${description.version}",
-            "&fAuthor: &7${description.authors.joinToString(", ")}",
-            "&fStatus: &a✓ Enabled"
+        val log = listOf(
+            "",
+            " &dᴇʟʏɪɴᴠ &7ᴠ${description.version}",
+            " &8--------------------------------------",
+            " &cɪɴꜰᴏʀᴍᴀᴛɪᴏɴ",
+            "&7   • &fɴᴀᴍᴇ: &bᴇʟʏɪɴᴠ",
+            "&7   • &fᴀᴜᴛʜᴏʀ: &bᴍᴀʀʀɪɴᴇᴇʀ",
+            "&7   • &fѕᴛᴏʀᴀɢᴇ ᴛʏᴘᴇ: &bʏᴀᴍʟ",
+            "",
+            " &cᴄᴏɴᴛᴀᴄᴛ",
+            "&7   • &fᴇᴍᴀɪʟ: &bǫʜᴜʏʟᴏᴠᴇɢᴅ@ɢᴍᴀɪʟ.ᴄᴏᴍ",
+            "&7   • &fᴅɪѕᴄᴏʀᴅ: &b@ᴍᴀʀʀɪɴᴇᴇʀ",
+            "",
+            " &cᴅᴇᴘᴇɴᴅᴇɴᴄɪᴇѕ",
+            "&7   • &fᴠᴀᴜʟᴛ: ${if (setupEconomy()) "&aᴇɴᴀʙʟᴇᴅ" else "&cɴᴏᴛ ꜰᴏᴜɴᴅ"}",
+            "&7   • &fᴘʟᴀᴄᴇʜᴏʟᴅᴇʀᴀᴘɪ: ${if (hasPAPI) "&aᴇɴᴀʙʟᴇᴅ" else "&cɴᴏᴛ ꜰᴏᴜɴᴅ"}",
+            " &8--------------------------------------",
+            ""
         )
 
-        val depLines = listOf(
-            "&fVault: ${if(!setupEconomy()) "&c✗ NOT FOUND" else "&a✓ ENABLED"}",
-            "&fPlaceholderAPI: ${if(!hasPAPI) "&c✗ NOT FOUND" else "&a✓ ENABLED"}"
-        )
-
-        val contactLines = listOf(
-            "&fDiscord: &7@marrineer",
-            "&fEmail: &7qhuylovegd@gmail.com"
-        )
-
-        val log = buildList {
-            addAll(simpleLogger.box("&d&lElyInv &7v${description.version}", infoLines))
-            add("") // Dòng trống
-            addAll(simpleLogger.box("&6Dependencies", depLines))
-            add("")
-            addAll(simpleLogger.box("&bContact", contactLines))
+        log.forEach {
+            server.consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', it))
         }
-        log.forEach(logger::info)
     }
 
     override fun onDisable() {
