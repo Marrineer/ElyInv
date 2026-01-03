@@ -25,6 +25,7 @@ class ElyInv : JavaPlugin() {
     lateinit var adventure: BukkitAudiences
 
     override fun onEnable() {
+        saveDefaultConfig()
         this.adventure = BukkitAudiences.create(this)
 
         if (!setupEconomy()) {
@@ -104,6 +105,7 @@ class ElyInv : JavaPlugin() {
     }
 
     override fun onDisable() {
+        saveConfig()
         if (::adventure.isInitialized) {
             adventure.close()
         }
