@@ -28,7 +28,7 @@ class ToggleCommand(
 
         plugin.messageUtils.sendWithPrefixToSender(
             sender,
-            plugin.messageUtils.get("commands.toggle-keep.$status")
+            plugin.messageUtils.get("commands.toggle.$status")
         )
     }
 

@@ -3,6 +3,7 @@ package com.marrineer.elyInv.commands
 import com.marrineer.elyInv.ElyInv
 import com.marrineer.elyInv.commands.interfaces.SubCommand
 import com.marrineer.elyInv.commands.subcommands.BuyCommand
+import com.marrineer.elyInv.commands.subcommands.HelpCommand
 import com.marrineer.elyInv.commands.subcommands.ReloadCommand
 import com.marrineer.elyInv.commands.subcommands.SetCommand
 import com.marrineer.elyInv.commands.subcommands.ToggleCommand
@@ -24,6 +25,7 @@ class ElyBase(
         register(ToggleCommand(plugin))
         register(BuyCommand(plugin))
         register(SetCommand(plugin))
+        register(HelpCommand(plugin))
     }
 
     override fun onCommand(
@@ -82,14 +84,23 @@ class ElyBase(
         cmd: Command,
         s: String,
         args: Array<out String>
-    ): List<String?> {
+    ): List<String> {
+
         if (args.size == 1) {
-            return subCommand.keys
-                .filter {
-                    it.startsWith(args[0], true)
+            return subCommand.values
+                .filter { sub ->
+                    (!sub.playerOnly || sender is Player) &&
+                            sender.hasPermission(sub.permission)
                 }
+                .map { it.name }
+                .filter { it.startsWith(args[0], ignoreCase = true) }
         }
+
         val sub = subCommand[args[0].lowercase()] ?: return emptyList()
+
+        if (sub.playerOnly && sender !is Player) return emptyList()
+        if (!sender.hasPermission(sub.permission)) return emptyList()
+
         return sub.tabComplete(sender, args.drop(1))
     }
 

@@ -5,7 +5,6 @@ import com.marrineer.elyInv.commands.interfaces.SubCommand
 import com.marrineer.elyInv.utils.SimpleLogger
 import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
-import org.bukkit.entity.Player
 
 class ReloadCommand(
     private val plugin: ElyInv
@@ -22,7 +21,7 @@ class ReloadCommand(
             SimpleLogger.LogLevel.INFO,
             "Config reloaded"
         )
-        if(sender !is ConsoleCommandSender) {
+        if (sender !is ConsoleCommandSender) {
             plugin.messageUtils.sendWithPrefixToSender(
                 sender,
                 plugin.messageUtils.get("commands.config-reloaded")

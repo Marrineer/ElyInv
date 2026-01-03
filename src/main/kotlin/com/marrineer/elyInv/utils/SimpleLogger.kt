@@ -3,7 +3,6 @@ package com.marrineer.elyInv.utils
 import com.marrineer.elyInv.ElyInv
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.md_5.bungee.api.ChatColor
 
 class SimpleLogger(
     plugin: ElyInv,
@@ -18,6 +17,24 @@ class SimpleLogger(
                 "<${level.color}>[$prefix]</${level.color}> <reset>$message"
             )
         )
+    }
+
+    fun getBannerList(): List<String> {
+        return listOf(
+            "      _         _            ",
+            """  ___| |_   _  (_)_ ____   __""",
+            """ / _ | | | | | | | '_ \ \ / /""",
+            """|  __| | |_| | | | | | \ V / """,
+            """ \___|_|\__, | |_|_| |_|\_/  """,
+            "        |___/                "
+        )
+    }
+
+    fun colorizeBanner(banner: List<String>): String {
+        val colors = listOf("&d", "&5", "&d", "&5", "&d", "&5")
+        return banner.mapIndexed { idx, line ->
+            "${colors.getOrElse(idx) { "&d" }}$line"
+        }.joinToString("\n")
     }
 
     enum class LogLevel(val color: String) {

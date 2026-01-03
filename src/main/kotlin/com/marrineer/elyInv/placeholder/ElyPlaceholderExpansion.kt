@@ -2,7 +2,6 @@ package com.marrineer.elyInv.placeholder
 
 import com.marrineer.elyInv.ElyInv
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import org.bukkit.entity.Player
 
 class ElyPlaceholderExpansion(
@@ -26,6 +25,7 @@ class ElyPlaceholderExpansion(
                 val remaining = plugin.configManager.getMaxUsage() - current
                 maxOf(remaining, 0).toString()
             }
+
             else -> null
         }
     }

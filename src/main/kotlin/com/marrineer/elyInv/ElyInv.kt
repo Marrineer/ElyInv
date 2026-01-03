@@ -5,6 +5,7 @@ import com.marrineer.elyInv.listeners.PlayerDeathListener
 import com.marrineer.elyInv.managers.ConfigManager
 import com.marrineer.elyInv.managers.MessageManager
 import com.marrineer.elyInv.managers.PlayerManager
+import com.marrineer.elyInv.models.StorageReport
 import com.marrineer.elyInv.placeholder.ElyPlaceholderExpansion
 import com.marrineer.elyInv.utils.MessageUtils
 import com.marrineer.elyInv.utils.SimpleLogger
@@ -34,7 +35,7 @@ class ElyInv : JavaPlugin() {
 
         val hasPAPI = (server.pluginManager.getPlugin("PlaceholderAPI") != null)
 
-        if(hasPAPI && server.pluginManager.isPluginEnabled("PlaceholderAPI")) {
+        if (hasPAPI && server.pluginManager.isPluginEnabled("PlaceholderAPI")) {
             ElyPlaceholderExpansion(this).register()
         }
 
@@ -54,6 +55,7 @@ class ElyInv : JavaPlugin() {
         this.messageManager = MessageManager.init(this)
 
         this.playerManager = PlayerManager(configManager.playerStoragePath(), this).init()
+        val report = playerManager.reload()
 
         val command = server.getPluginCommand("elyinv")
         if (command == null) {
@@ -68,14 +70,16 @@ class ElyInv : JavaPlugin() {
 
         simpleLogger.log(SimpleLogger.LogLevel.INFO, "Plugin enabled")
 
+
         val log = listOf(
+            "",
+            simpleLogger.colorizeBanner(simpleLogger.getBannerList()),
             "",
             " &dᴇʟʏɪɴᴠ &7ᴠ${description.version}",
             " &8--------------------------------------",
             " &cɪɴꜰᴏʀᴍᴀᴛɪᴏɴ",
             "&7   • &fɴᴀᴍᴇ: &bᴇʟʏɪɴᴠ",
             "&7   • &fᴀᴜᴛʜᴏʀ: &bᴍᴀʀʀɪɴᴇᴇʀ",
-            "&7   • &fѕᴛᴏʀᴀɢᴇ ᴛʏᴘᴇ: &bʏᴀᴍʟ",
             "",
             " &cᴄᴏɴᴛᴀᴄᴛ",
             "&7   • &fᴇᴍᴀɪʟ: &bǫʜᴜʏʟᴏᴠᴇɢᴅ@ɢᴍᴀɪʟ.ᴄᴏᴍ",
@@ -84,12 +88,18 @@ class ElyInv : JavaPlugin() {
             " &cᴅᴇᴘᴇɴᴅᴇɴᴄɪᴇѕ",
             "&7   • &fᴠᴀᴜʟᴛ: ${if (setupEconomy()) "&aᴇɴᴀʙʟᴇᴅ" else "&cɴᴏᴛ ꜰᴏᴜɴᴅ"}",
             "&7   • &fᴘʟᴀᴄᴇʜᴏʟᴅᴇʀᴀᴘɪ: ${if (hasPAPI) "&aᴇɴᴀʙʟᴇᴅ" else "&cɴᴏᴛ ꜰᴏᴜɴᴅ"}",
+            "",
+            " &cѕᴛᴏʀᴀɢᴇ ɪɴɪᴛɪᴀʟɪᴢᴇᴅ",
+            "&7   • &fѕᴛᴏʀᴀɢᴇ ᴛʏᴘᴇ: &b${report.type}",
+            "&7   • &fᴘʀᴏꜰɪʟᴇѕ: &b${if(report.entries == 0) "empty" else "${report.entries} entries"}",
+            "&7   • &fᴅᴜʀᴀᴛɪᴏɴ: &b${report.durationMs}ms",
             " &8--------------------------------------",
             ""
         )
 
         log.forEach {
-            server.consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', it))
+            val line = it.toString()
+            server.consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', line))
         }
     }
 

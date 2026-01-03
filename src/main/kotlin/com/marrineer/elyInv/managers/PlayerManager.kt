@@ -2,6 +2,7 @@ package com.marrineer.elyInv.managers
 
 import com.marrineer.elyInv.ElyInv
 import com.marrineer.elyInv.models.PlayerProfile
+import com.marrineer.elyInv.models.StorageReport
 import com.marrineer.elyInv.utils.SimpleLogger
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
@@ -32,11 +33,10 @@ class PlayerManager(
                 }
             }
         }
-        reload()
         return this@PlayerManager
     }
 
-    fun reload() {
+    fun reload(): StorageReport {
         val startTime = System.currentTimeMillis()
         playerFile = YamlConfiguration.loadConfiguration(file)
         clearAllProfiles()
@@ -52,9 +52,12 @@ class PlayerManager(
         }
 
         val duration = System.currentTimeMillis() - startTime
-        plugin.simpleLogger.log(
-            SimpleLogger.LogLevel.INFO,
-            "Loaded ${playerProfile.size} profiles in ${duration}ms"
+        val entries = playerProfile.size
+
+        return StorageReport(
+            type = "Yaml",
+            entries = entries,
+            durationMs = duration
         )
     }
 
@@ -97,7 +100,9 @@ class PlayerManager(
     fun getCount(player: UUID): Int = getProfile(player)?.count ?: 0
 
     fun setCount(player: UUID, count: Int) {
-        playerProfile[player] = PlayerProfile(count)
+        val current = getProfile(player)
+        playerProfile[player] = current?.copy(count = count)
+            ?: PlayerProfile(count)
     }
 
     fun addCount(player: UUID, amount: Int) {

@@ -1,8 +1,8 @@
 commands:
-  no-subcommand: "Sử dụng /help để xem hướng dẫn"
-  invalid-command: "Lệnh không tồn tại, sử dụng /help để xem danh sách lệnh có sẵn"
+  no-subcommand: "Sử dụng /elyinv help để xem hướng dẫn"
+  invalid-command: "Lệnh không tồn tại, sử dụng /elyinv help để xem danh sách lệnh có sẵn"
   no-permission: "Bạn không có quyền sử dụng lệnh này!"
-  player-only: "Chỉ người chơi mới có quyền sử dụng lệnh này"
+  player-only: "Chỉ người chơi mới được sử dụng lệnh này"
   config-reloaded: "Đã reload config thành công"
 
   elyinv:
@@ -19,6 +19,6 @@ commands:
       not-enough-money: "Bạn không đủ tiền (Cần {price})"
       success-with-price: "Mua thành công {amount} usage (-{price})"
 
-  toggle-keep:
-    enabled: "Đã bật tính năng keepInventory"
-    disabled: "Đã tắt tính năng keepInventory"
+    toggle:
+      enabled: "Đã bật tính năng keepInventory"
+      disabled: "Đã tắt tính năng keepInventory"
